@@ -1,35 +1,49 @@
 import React from "react";
+import { Outlet } from "react-router";
+
 import Header from "../Components/Header/Header";
 import LatestNews from "../Components/LatestNews/LatestNews";
 import Navbar from "../Components/Navbar/Navbar";
 import Leftbar from "../Components/Sidebar/Leftbar/Leftbar";
 import Rightbar from "../Components/Sidebar/Rightbar/Rightbar";
-import { Outlet } from "react-router";
-import Home from "../Pages/Home/Home";
 
 const HomeLayout = () => {
   return (
     <div>
+      {/* Header */}
       <header>
-        <Header></Header>
-        <LatestNews></LatestNews>
-          <Navbar></Navbar>
+        <Header />
+        <LatestNews />
+        <Navbar />
       </header>
-    
-      <main className="grid grid-cols-12 w-10/12 mx-auto mt-14">
-        <section className="col-span-3">
-          <Leftbar></Leftbar>
-        </section>
 
-        <section className="col-span-6">
-            <Outlet></Outlet>
-        </section>
+      <main className="w-11/12 lg:w-10/12 mx-auto mt-6 lg:mt-14">
 
-        <section className="col-span-3">
-          <Rightbar></Rightbar>
-        </section>
-      </main>
-    </div>
+  {/* Categories on mobile */}
+  <div className="block lg:hidden mb-6">
+    <Leftbar />
+  </div>
+
+  <div className="grid grid-cols-10 lg:grid-cols-12 gap-4 lg:gap-8">
+
+    {/* Desktop Categories */}
+    <aside className="hidden lg:block lg:col-span-3">
+      <Leftbar />
+    </aside>
+
+    {/* News Feed */}
+    <section className="col-span-7 lg:col-span-6">
+      <Outlet />
+    </section>
+
+    {/* Right Sidebar */}
+    <aside className="col-span-3 lg:col-span-3">
+      <Rightbar />
+    </aside>
+
+  </div>
+</main>
+</div>
   );
 };
 

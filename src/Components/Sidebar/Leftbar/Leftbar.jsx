@@ -1,12 +1,12 @@
-import React from 'react';
-import Categories from '../../Categories/Categories';
+import React from "react";
+import Categories from "../../Categories/Categories";
 
 const Leftbar = () => {
-    return (
-        <div>
-            <Categories></Categories>
-        </div>
-    );
+  return (
+    <aside className="w-full">
+      <Categories />
+    </aside>
+  );
 };
 
 export default Leftbar;
