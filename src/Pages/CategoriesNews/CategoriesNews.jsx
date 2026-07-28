@@ -5,7 +5,7 @@ import NewsCard from "../../Components/NewsCard/NewsCard";
 const CategoriesNews = () => {
   const [categoryNews, setCategoryNews] = useState([]);
 
-  const { id } = useParams();
+  const { id = "0" } = useParams();
   const newsData = useLoaderData();
 
   useEffect(() => {
