@@ -18,76 +18,83 @@ const NewsCard = ({ news }) => {
   } = news;
 
   return (
-    <div className="card bg-base-100 shadow-md border border-gray-200 rounded-xl overflow-hidden">
+    <article className="bg-white border border-gray-200 rounded-xl shadow-sm hover:shadow-lg transition duration-300 overflow-hidden mb-8">
 
       {/* Header */}
-      <div className="flex justify-between items-center bg-gray-100 px-3 sm:px-5 py-3 sm:py-4">
+      <div className="flex items-center justify-between bg-gray-50 px-4 md:px-6 py-4">
 
-        {/* Author */}
         <div className="flex items-center gap-3">
           <img
             src={author.img}
             alt={author.name}
-            className="w-10 h-10 md:w-12 md:h-12 rounded-full object-cover"
+            className="w-11 h-11 md:w-14 md:h-14 rounded-full object-cover"
           />
 
           <div>
-            <h3 className="font-bold text-sm md:text-base">
+            <h3 className="font-semibold text-sm md:text-base text-gray-800">
               {author.name}
             </h3>
 
             <p className="text-xs md:text-sm text-gray-500">
               {format(
                 new Date(author.published_date),
-                "yyyy-MM-dd"
+                "MMMM dd, yyyy"
               )}
             </p>
           </div>
         </div>
 
-        {/* Icons */}
-        <div className="flex gap-3 md:gap-4 text-gray-500 text-lg">
-          <FaBookmark className="cursor-pointer hover:text-black transition" />
-          <FaShareAlt className="cursor-pointer hover:text-black transition" />
+        <div className="flex gap-4 text-gray-500 text-lg">
+          <button className="hover:text-red-500 transition">
+            <FaBookmark />
+          </button>
+
+          <button className="hover:text-red-500 transition">
+            <FaShareAlt />
+          </button>
         </div>
 
       </div>
 
       {/* Title */}
-      <div className="px-3 sm:px-5 pt-4 sm:pt-5">
-        <h2 className="text-lg sm:text-xl lg:text-2xl font-bold leading-snug">
+      <div className="px-4 md:px-6 pt-5">
+
+        <h2 className="text-xl md:text-2xl lg:text-3xl font-bold leading-snug text-gray-900 hover:text-red-600 transition cursor-pointer">
           {title}
         </h2>
+
       </div>
 
-      {/* Image */}
-      <figure className="px-3 sm:px-5 pt-4 sm:pt-5">
+      {/* Featured Image */}
+      <div className="px-4 md:px-6 py-5">
+
         <img
           src={image_url}
           alt={title}
-          className="w-full h-48 sm:h-56 lg:h-64 object-cover rounded-lg"
+          className="w-full h-56 md:h-72 lg:h-96 rounded-xl object-cover"
         />
-      </figure>
+
+      </div>
 
       {/* Body */}
-      <div className="card-body px-3 sm:px-5 pt-4 sm:pt-5">
+      <div className="px-4 md:px-6 pb-5">
 
-        <p className="text-gray-600 text-sm md:text-base leading-7">
-          {details.slice(0, 180)}...
-          <span className="text-orange-500 font-semibold cursor-pointer hover:underline">
-            {" "}
+        <p className="text-gray-600 text-sm md:text-base leading-8">
+          {details.slice(0, 220)}...
+
+          <button className="ml-2 text-red-600 font-semibold hover:underline">
             Read More
-          </span>
+          </button>
         </p>
 
-        <hr className="my-2" />
+        <hr className="my-6" />
 
-        {/* Footer */}
-        <div className="flex justify-between items-center">
+        <div className="flex items-center justify-between">
 
           {/* Rating */}
-          <div className="flex items-center gap-2">
-            <div className="flex text-orange-400 text-sm md:text-base">
+          <div className="flex items-center gap-3">
+
+            <div className="flex text-yellow-500">
               {[...Array(5)].map((_, index) => (
                 <FaStar
                   key={index}
@@ -100,21 +107,23 @@ const NewsCard = ({ news }) => {
               ))}
             </div>
 
-            <span className="font-semibold text-sm md:text-base">
+            <span className="font-semibold text-gray-700">
               {rating.number}
             </span>
+
           </div>
 
           {/* Views */}
-          <div className="flex items-center gap-2 text-gray-600 text-sm md:text-base">
+          <div className="flex items-center gap-2 text-gray-500">
             <FaEye />
-            <span>{total_view}</span>
+            <span>{total_view.toLocaleString()}</span>
           </div>
 
         </div>
 
       </div>
-    </div>
+
+    </article>
   );
 };
 

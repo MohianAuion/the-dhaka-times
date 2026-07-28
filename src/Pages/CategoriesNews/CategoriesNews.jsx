@@ -9,11 +9,11 @@ const CategoriesNews = () => {
   const newsData = useLoaderData();
 
   useEffect(() => {
-    if (id == "0") {
+    if (id === "0") {
       setCategoryNews(newsData);
-    } else if (id == "1") {
+    } else if (id === "1") {
       const breakingNews = newsData.filter(
-        (news) => news.others.is_trending === true
+        (news) => news.others.is_trending
       );
       setCategoryNews(breakingNews);
     } else {
@@ -25,21 +25,39 @@ const CategoriesNews = () => {
   }, [newsData, id]);
 
   return (
-    <div className="w-full">
+    <section className="w-full">
 
       {/* Heading */}
-      <h2 className="text-lg sm:text-xl lg:text-2xl font-bold text-gray-800 mb-5 px-2 md:px-4">
-        News Feed
-      </h2>
+      <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between border-b border-gray-200 pb-4 mb-8">
 
-      {/* News Cards */}
-      <div className="space-y-6 px-2 md:px-4">
-        {categoryNews.map((news) => (
-          <NewsCard key={news.id} news={news} />
-        ))}
+        <h2 className="text-xl lg:text-2xl font-bold text-gray-900">
+          News Feed
+        </h2>
+
       </div>
 
-    </div>
+      {/* No News */}
+      {categoryNews.length === 0 ? (
+        <div className="bg-gray-50 border border-gray-200 rounded-xl py-12 text-center">
+
+          <h3 className="text-xl font-semibold text-gray-700">
+            No News Found
+          </h3>
+
+          <p className="text-gray-500 mt-2">
+            There are no articles available in this category.
+          </p>
+
+        </div>
+      ) : (
+        <div className="space-y-8">
+          {categoryNews.map((news) => (
+            <NewsCard key={news.id} news={news} />
+          ))}
+        </div>
+      )}
+
+    </section>
   );
 };
 

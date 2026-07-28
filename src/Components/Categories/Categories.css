@@ -1,5 +1,60 @@
+/* Category Button */
+
+.category-btn {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+
+  min-height: 52px;
+
+  padding: 12px 10px;
+
+  border: 1px solid #e5e7eb;
+  border-radius: 8px;
+
+  background: #fff;
+
+  color: #6b7280;
+  font-size: 14px;
+  font-weight: 600;
+  text-align: center;
+
+  transition: all 0.25s ease;
+}
+
+.category-btn:hover {
+  background: #f3f4f6;
+  color: #111827;
+}
+
 #categories a.active {
-  background-color: #e7e7e7;
+  background: #e7e7e7;
   color: #d72050;
   font-weight: 700;
+  border-color: #d72050;
+}
+
+/* Mobile */
+@media (max-width: 639px) {
+  .category-btn {
+    min-height: 46px;
+    font-size: 13px;
+    padding: 10px 6px;
+  }
+}
+
+/* Tablet */
+@media (min-width: 640px) and (max-width: 1023px) {
+  .category-btn {
+    min-height: 50px;
+    font-size: 14px;
+  }
+}
+
+/* Desktop */
+@media (min-width: 1024px) {
+  .category-btn {
+    min-height: 54px;
+    font-size: 15px;
+  }
 }

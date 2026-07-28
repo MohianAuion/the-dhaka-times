@@ -5,12 +5,12 @@ import Header from "../Components/Header/Header";
 import LatestNews from "../Components/LatestNews/LatestNews";
 import Navbar from "../Components/Navbar/Navbar";
 import Leftbar from "../Components/Sidebar/Leftbar/Leftbar";
-import Rightbar from "../Components/Sidebar/Rightbar/Rightbar";
+import Footer from "../Components/Footer/Footer";
 import ScrollToTopButton from "../Components/ScrollToTopButton/ScrollToTopButton";
 
 const HomeLayout = () => {
   return (
-    <div>
+    <div className="min-h-screen flex flex-col">
       {/* Header */}
       <header>
         <Header />
@@ -19,16 +19,29 @@ const HomeLayout = () => {
       </header>
 
       {/* Main */}
-      <main className="w-11/12 lg:w-10/12 mx-auto mt-6 lg:mt-14">
-        {/* Categories (Mobile Only) */}
-        <div className="block lg:hidden mb-6">
-          <Leftbar />
+      <main className="w-11/12 lg:w-10/12 mx-auto mt-6 lg:mt-10 flex-1">
+
+        {/* ================= MOBILE ================= */}
+        <div className="block lg:hidden">
+
+          {/* Categories */}
+          <div className="mb-6">
+            <Leftbar />
+          </div>
+
+          {/* News Feed */}
+          <section id="news-feed" className="relative">
+            <Outlet />
+          </section>
+
         </div>
 
-        <div className="grid grid-cols-10 lg:grid-cols-12 gap-4 lg:gap-8">
-          {/* Left Sidebar (Desktop Only) */}
-          <aside className="hidden lg:block lg:col-span-3">
-            <div className="sticky top-6 h-fit">
+        {/* ================= DESKTOP ================= */}
+        <div className="hidden lg:grid lg:grid-cols-12 gap-8 items-start">
+
+          {/* Categories */}
+          <aside className="lg:col-span-3 lg:sticky lg:top-7 lg:h-fit">
+            <div className="">
               <Leftbar />
             </div>
           </aside>
@@ -36,39 +49,20 @@ const HomeLayout = () => {
           {/* News Feed */}
           <section
             id="news-feed"
-            className="col-span-7 lg:col-span-6 relative"
+            className="lg:col-span-9 relative"
           >
             <Outlet />
-
-            {/* Floating Scroll Button — scoped to this column, floats while scrolling within it */}
-            <div className="sticky bottom-16 lg:bottom-6 flex justify-start pointer-events-none">
-              <div className="pointer-events-auto pl-4 lg:pl-6">
-                <ScrollToTopButton className="sticky bottom-16 lg:bottom-6" />
-              </div>
-            </div>
           </section>
 
-          {/* Right Sidebar */}
-          <aside className="col-span-3 lg:col-span-3 min-h-0">
-            <div
-              className="
-                sticky
-                top-6
-                h-[calc(100dvh-2rem)]
-                max-h-[calc(100dvh-2rem)]
-                overflow-y-scroll
-                overscroll-contain
-                pr-2
-                scrollbar-thin
-                min-h-0
-                [-webkit-overflow-scrolling:touch]
-              "
-            >
-              <Rightbar />
-            </div>
-          </aside>
         </div>
+
       </main>
+
+      {/* Footer */}
+      <Footer />
+
+      {/* Floating Scroll Button */}
+      <ScrollToTopButton />
     </div>
   );
 };
