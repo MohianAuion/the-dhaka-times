@@ -10,7 +10,7 @@ import ScrollToTopButton from "../Components/ScrollToTopButton/ScrollToTopButton
 
 const HomeLayout = () => {
   return (
-    <div className="min-h-screen flex flex-col">
+    <>
       {/* Header */}
       <header>
         <Header />
@@ -19,51 +19,41 @@ const HomeLayout = () => {
       </header>
 
       {/* Main */}
-      <main className="w-11/12 lg:w-10/12 mx-auto mt-6 lg:mt-10 flex-1">
-
-        {/* ================= MOBILE ================= */}
+      <main className="w-11/12 lg:w-10/12 mx-auto mt-6 lg:mt-10">
+        {/* Mobile */}
         <div className="block lg:hidden">
-
-          {/* Categories */}
           <div className="mb-6">
             <Leftbar />
           </div>
 
-          {/* News Feed */}
-          <section id="news-feed" className="relative">
+          <section id="news-feed">
             <Outlet />
           </section>
-
         </div>
 
-        {/* ================= DESKTOP ================= */}
+        {/* Desktop */}
         <div className="hidden lg:grid lg:grid-cols-12 gap-8 items-start">
-
-          {/* Categories */}
-          <aside className="lg:col-span-3 lg:sticky lg:top-7 lg:h-fit">
-            <div className="">
+          <aside className="lg:col-span-3 sticky top-7 h-fit">
+            <div>
               <Leftbar />
             </div>
           </aside>
 
-          {/* News Feed */}
           <section
             id="news-feed"
-            className="lg:col-span-9 relative"
+            className="lg:col-span-9 min-w-0"
           >
             <Outlet />
           </section>
-
         </div>
-
       </main>
 
       {/* Footer */}
       <Footer />
 
-      {/* Floating Scroll Button */}
+      {/* Floating Button */}
       <ScrollToTopButton />
-    </div>
+    </>
   );
 };
 

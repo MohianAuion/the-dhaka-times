@@ -54,7 +54,7 @@ const Categories = () => {
             key={category.id}
             to={`/categories/${category.id}`}
             className={({ isActive }) => `
-              ${isActive ? "border-2 border-gray-500 rounded-md bg-gray-300 text-red-500 font-bold text-center" : "border border-gray-200 rounded-xl bg-white text-gray-700 font-semibold text-left"}
+              ${isActive ? "border-2 border-gray-500 rounded-md bg-gray-200 text-red-500 font-bold text-center" : "border border-gray-200 rounded-xl bg-white text-gray-700 font-semibold text-left"}
               py-3
               px-5
               text-base
@@ -62,7 +62,7 @@ const Categories = () => {
               hover:border-2
               hover:border-gray-500
               hover:rounded-md
-              hover:bg-gray-200
+              hover:bg-gray-300
               hover:text-gray-800
               hover:font-semibold
               transition-all
