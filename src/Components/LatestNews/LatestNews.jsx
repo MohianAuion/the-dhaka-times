@@ -17,7 +17,9 @@ const LatestNews = () => {
         {/* Latest Button */}
         <button
           className="
-            btn btn-secondary
+            btn 
+            bg-red-600
+            text-amber-100
             h-8 min-h-8
             px-3
             text-xs

@@ -12,36 +12,42 @@ const Categories = () => {
       <h2 className="text-lg md:text-xl font-bold text-gray-800 mb-5">
         All Categories
       </h2>
-{/* Mobile */}
-      <div
-        id="categories"
-        className="grid grid-cols-4 gap-2 lg:hidden"
-      >
-        {categories.map((category) => (
-          <NavLink
-            key={category.id}
-            to={`/categories/${category.id}`}
-            className={({ isActive }) => `
-              ${isActive ? "border-2 border-gray-500 rounded-md bg-gray-300 text-red-500 font-bold" : "border border-gray-200 rounded-lg bg-white text-gray-600 font-medium"}
-              py-2
-              px-1
-              text-center
-              text-[11px]
-              leading-tight
-              hover:border-2
-              hover:border-gray-500
-              hover:rounded-md
-              hover:bg-gray-200
-              hover:text-gray-800
-              hover:font-semibold
-              transition-all
-              duration-200
-            `}
-          >
-            {category.name}
-          </NavLink>
-        ))}
-      </div>
+
+   {/* Mobile */}
+<div
+  id="categories"
+  className="grid grid-cols-3 sm:grid-cols-4 gap-2 lg:hidden"
+>
+  {categories.map((category) => (
+    <NavLink
+      key={category.id}
+      to={`/categories/${category.id}`}
+      className={({ isActive }) => `
+        flex
+        items-center
+        justify-center
+        min-h-14
+        px-2
+        py-2
+        text-center
+        text-[11px]
+        sm:text-xs
+        leading-4
+        break-words
+        whitespace-normal
+        transition-all
+        duration-200
+        ${
+          isActive
+            ? "border-2 border-gray-500 rounded-lg bg-gray-200 text-red-500 font-bold"
+            : "border border-gray-200 rounded-lg bg-white text-gray-600 font-medium hover:border-gray-500 hover:bg-gray-100"
+        }
+      `}
+    >
+      {category.name}
+    </NavLink>
+  ))}
+</div>
 
 
       {/* Desktop */}

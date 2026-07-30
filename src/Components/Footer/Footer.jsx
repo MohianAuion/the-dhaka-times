@@ -22,7 +22,7 @@ const Footer = () => {
   <img
     src={bgImg}
     alt="Advertisement"
-    className="w-full h-56 object-cover rounded-xl"
+    className="w-full h-40 object-cover rounded-xl"
   />
 </div>
 
