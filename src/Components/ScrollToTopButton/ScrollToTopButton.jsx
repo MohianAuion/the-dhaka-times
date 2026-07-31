@@ -1,25 +1,29 @@
 import React, { useEffect, useState } from "react";
 import { FaArrowUp } from "react-icons/fa";
 
-const ScrollToTopButton = () => {
+const ScrollToTopButton = ({
+  onClick,
+  icon,
+  position = "bottom-6 right-6",
+  showAfter = 300,
+}) => {
   const [showButton, setShowButton] = useState(false);
 
   useEffect(() => {
     const handleScroll = () => {
-      setShowButton(window.scrollY > 300);
+      setShowButton(window.scrollY > showAfter);
     };
 
     window.addEventListener("scroll", handleScroll);
 
-    // Run once on mount
     handleScroll();
 
     return () => {
       window.removeEventListener("scroll", handleScroll);
     };
-  }, []);
+  }, [showAfter]);
 
-  const scrollToTop = () => {
+  const defaultScrollToTop = () => {
     window.scrollTo({
       top: 0,
       behavior: "smooth",
@@ -30,11 +34,10 @@ const ScrollToTopButton = () => {
     <>
       {showButton && (
         <button
-          onClick={scrollToTop}
-          className="
+          onClick={onClick || defaultScrollToTop}
+          className={`
             fixed
-            bottom-6
-            right-6
+            ${position}
             z-[9999]
             w-10
             h-10
@@ -50,9 +53,12 @@ const ScrollToTopButton = () => {
             transition-all
             duration-300
             cursor-pointer
-          "
+            flex
+            items-center
+            justify-center
+          `}
         >
-          <FaArrowUp className="mx-auto text-lg" />
+          {icon || <FaArrowUp className="text-lg" />}
         </button>
       )}
     </>
