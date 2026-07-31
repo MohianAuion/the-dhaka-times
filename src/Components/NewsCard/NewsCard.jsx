@@ -6,6 +6,7 @@ import {
   FaEye,
   FaStar,
 } from "react-icons/fa";
+import { Link } from "react-router";
 
 const NewsCard = ({ news }) => {
   const {
@@ -15,6 +16,7 @@ const NewsCard = ({ news }) => {
     details,
     rating,
     total_view,
+    id,
   } = news;
 
   return (
@@ -82,9 +84,8 @@ const NewsCard = ({ news }) => {
         <p className="text-gray-600 text-sm md:text-base leading-8">
           {details.slice(0, 220)}...
 
-          <button className="ml-2 text-red-600 font-semibold hover:underline">
-            Read More
-          </button>
+<Link to={`/newsdetails/${id}`} className="ml-2 text-red-600 font-semibold hover:underline"> Read More</Link>
+
         </p>
 
         <hr className="my-6" />
