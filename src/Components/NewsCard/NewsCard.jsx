@@ -81,17 +81,12 @@ const NewsCard = ({ news }) => {
       {/* Body */}
       <div className="px-4 md:px-6 pb-5">
 
-       <p className="text-gray-600 text-sm md:text-base leading-8">
-  {details.slice(0, 220)}...
-  {" "}
-  <Link
-    to={`/newsdetails/${id}`}
-    className="text-red-600 font-semibold hover:underline"
-    style={{ position: "relative", zIndex: 100 }}
-  >
-    Read More
-  </Link>
-</p>
+        <div className="text-gray-600 text-sm md:text-base leading-8">
+          {details.slice(0, 220)}...
+
+<Link to={`/newsdetails/${id}`} className="ml-2 text-red-600 font-semibold hover:underline"> Read More</Link>
+
+        </div>
 
         <hr className="my-6" />
 

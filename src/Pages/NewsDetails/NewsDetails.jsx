@@ -11,7 +11,7 @@ const NewsDetails = () => {
 const data=useLoaderData();
 
 useEffect(()=>{
-const newsData=data.find(singleNews=>singleNews.id===id);
+const newsData=data.find(singleNews=>singleNews.id==id);
 setNews(newsData);
 },[data, id])
 
