@@ -1,8 +1,22 @@
-import React from "react";
+import React, { use } from "react";
 import profileImg from "../../assets/user.png";
 import { NavLink } from "react-router";
+import { AuthContext } from "../../Context/AuthContext";
 
 const Navbar = () => {
+
+  const{user, logOut}=use(AuthContext);
+
+  const handleLogOut=()=>{
+    logOut()
+    .then(result=>{
+      console.log(result.user);
+      alert('user is logged out');
+    })
+    .catch(error=>{
+      console.log(error.message);
+    })
+  }
   return (
     <nav className="w-11/12 lg:w-10/12 mx-auto mt-5">
       {/* Mobile */}
@@ -50,9 +64,13 @@ const Navbar = () => {
             className="w-10 h-10 rounded-full"
           />
 
-          <button className="btn bg-gray-800 text-white">
+          {
+            user? <button onClick={handleLogOut} className="btn bg-gray-800 text-white">
+            LogOut
+          </button> : <button className="btn bg-gray-800 text-white">
             Login
           </button>
+          }
         </div>
 
       </div>

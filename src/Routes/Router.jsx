@@ -3,6 +3,8 @@ import HomeLayout from "../Layouts/HomeLayout";
 import AuthLayout from "../Layouts/AuthLayout";
 import CategoriesNews from "../Pages/CategoriesNews/CategoriesNews";
 import NewsDetails from "../Pages/NewsDetails/NewsDetails";
+import Login from "../Pages/Login/Login";
+import Register from "../Pages/Register/Register";
 
 const router = createBrowserRouter([
   {
@@ -27,7 +29,17 @@ const router = createBrowserRouter([
     loader:()=>fetch('/news.json'),
   }, {
     path: '/auth',
-    Component: AuthLayout
+    Component: AuthLayout,
+    children:[
+      {
+        path:'/auth/login',
+        Component:Login
+      },
+      {
+        path:'/auth/register',
+        Component:Register
+      }
+    ]
   }, {
     path: '/*',
   element:<h2>error-404</h2>
