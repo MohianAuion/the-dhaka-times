@@ -42,7 +42,7 @@ const NewsDetails = () => {
       <Footer />
 
       {/* Floating Scroll To Top Button */}
-      <ScrollToTopButton showAfter={0} />
+      <ScrollToTopButton showAfter={200} />
     </>
   );
 };
