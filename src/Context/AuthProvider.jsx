@@ -14,10 +14,13 @@ const googleProvider = new GoogleAuthProvider();
 
 const AuthProvider = ({ children }) => {
   const [user, setUser] = useState(null);
+  const[loading, setLoading]=useState(true);
+  console.log(user);
 
   useEffect(() => {
     const unsubscribe = onAuthStateChanged(auth, (currentUser) => {
       setUser(currentUser);
+      setLoading(false);
     });
     return () => {
       unsubscribe();
@@ -26,21 +29,25 @@ const AuthProvider = ({ children }) => {
 
   // createUserWithEmailAndPassword
   const createUser = (email, password) => {
+    setLoading(true);
     return createUserWithEmailAndPassword(auth, email, password);
   };
 
   // signInWithEmailAndPassword
   const logInUser = (email, password) => {
+    setLoading(true);
     return signInWithEmailAndPassword(auth, email, password);
   };
 
   // signInWithGoogle
   const loginWithGoogle = () => {
+    setLoading(true);
     return signInWithPopup(auth, googleProvider);
   };
 
 //   signOut
 const logOut=()=>{
+    setLoading(true);
     signOut(auth);
 }
 
@@ -50,6 +57,8 @@ const logOut=()=>{
     logInUser,
     loginWithGoogle,
     logOut,
+    loading,
+    setLoading,
   };
 
   return <AuthContext value={authInfo}>{children}</AuthContext>;

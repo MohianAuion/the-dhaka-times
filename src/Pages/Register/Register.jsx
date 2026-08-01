@@ -2,11 +2,12 @@ import React, { use, useState } from "react";
 import { AuthContext } from "../../Context/AuthContext";
 import { FaEye, FaEyeSlash } from "react-icons/fa";
 import { FcGoogle } from "react-icons/fc";
-import { Link, useNavigate } from "react-router";
+import { Link, useLocation, useNavigate } from "react-router";
 
 const Register = () => {
   const { createUser, loginWithGoogle } = use(AuthContext);
   const navigate = useNavigate();
+  const location=useLocation();
 
   const [showPass, setShowPass] = useState(false);
   const [error, setError] = useState("");
@@ -23,7 +24,7 @@ const Register = () => {
         console.log(result.user);
         alert("Successfully created your account");
         e.target.reset();
-        navigate("/");
+        navigate(location.state || '/', {replace:true});
       })
       .catch((error) => {
         setError(error.message);
@@ -43,7 +44,7 @@ const Register = () => {
       .then((result) => {
         console.log(result.user);
         alert("Successfully created your account");
-        navigate("/");
+        navigate(location.state || '/', {replace:true});
       })
       .catch((error) => {
         setError(error.message);
@@ -152,6 +153,7 @@ const Register = () => {
             Already have an account?{" "}
             <Link
               to="/auth/login"
+              state={location.state}
               className="text-sky-500 font-semibold hover:underline"
             >
               Login
