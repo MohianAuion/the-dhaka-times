@@ -6,6 +6,7 @@ import Login from "../Pages/Login/Login";
 import Register from "../Pages/Register/Register";
 import PrivateRoutes from "./PrivateRoutes";
 import NewsDetails from "../Pages/NewsDetails/NewsDetails";
+import Error from "../Pages/Error/Error";
 
 const router = createBrowserRouter([
   {
@@ -48,7 +49,7 @@ const router = createBrowserRouter([
     ]
   }, {
     path: '/*',
-  element:<h2>error-404</h2>
+  Component:Error,
   }
 ]);
 

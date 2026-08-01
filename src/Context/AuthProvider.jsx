@@ -7,6 +7,7 @@ import {
   signInWithEmailAndPassword,
   signInWithPopup,
   signOut,
+  updateProfile,
 } from "firebase/auth";
 import { auth } from "../Firebase/Firebase.config";
 
@@ -51,12 +52,23 @@ const logOut=()=>{
     signOut(auth);
 }
 
+// update profile
+
+const updateUserProfile=(name, photo)=>{
+    return updateProfile(auth.currentUser,{
+        displayName:name, 
+        photoURL:photo,
+    })
+
+}
+
   const authInfo = {
     user,
     createUser,
     logInUser,
     loginWithGoogle,
     logOut,
+    updateUserProfile,
     loading,
     setLoading,
   };

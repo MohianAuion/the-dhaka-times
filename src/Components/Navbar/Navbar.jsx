@@ -1,11 +1,16 @@
 import React, { use } from "react";
 import profileImg from "../../assets/user.png";
-import { Link, NavLink } from "react-router";
+import { Link } from "react-router";
 import { AuthContext } from "../../Context/AuthContext";
+import Loading from "../../Pages/Loading/Loading";
 
 const Navbar = () => {
 
-  const{user, logOut}=use(AuthContext);
+  const{user, logOut, loading}=use(AuthContext);
+
+  if(loading){
+    return <Loading></Loading>
+  }
 
   const handleLogOut=()=>{
     logOut()
@@ -24,18 +29,16 @@ const Navbar = () => {
       <div className="flex lg:hidden items-center justify-between">
 
         {/* Navigation */}
-        <div className="flex items-center gap-4 text-sm font-medium">
-          <NavLink to="/">Home</NavLink>
-          <NavLink to="/about">About</NavLink>
-          <NavLink to="/career">Career</NavLink>
+        <div className="flex items-center font-semibold text-green-700 text-sm">
+          {user?.email}
         </div>
 
         {/* Right */}
         <div className="flex items-center gap-2">
           <img
-            src={profileImg}
+            src={user?.photoURL || profileImg }
             alt="Profile"
-            className="w-8 h-8 rounded-full"
+            className="w-9 h-9 rounded-full"
           />
 
          {
@@ -47,22 +50,16 @@ const Navbar = () => {
       {/* Desktop */}
       <div className="hidden lg:flex items-center justify-between">
 
-        {/* Empty Left */}
-        <div className="flex-1"></div>
-
-        {/* Navigation */}
-        <div className="flex gap-8 text-base font-medium">
-          <NavLink to="/">Home</NavLink>
-          <NavLink to="/about">About</NavLink>
-          <NavLink to="/career">Career</NavLink>
+        {/* Left */}
+        <div className="flex-1 font-semibold text-green-700">
+{user?.email}
         </div>
-
         {/* Right */}
         <div className="flex flex-1 justify-end items-center gap-3">
           <img
-            src={profileImg}
+            src={user?.photoURL || profileImg}
             alt="Profile"
-            className="w-10 h-10 rounded-full"
+            className="w-11 h-11 rounded-full"
           />
 
           {

@@ -5,7 +5,7 @@ import { FcGoogle } from "react-icons/fc";
 import { Link, useLocation, useNavigate } from "react-router";
 
 const Register = () => {
-  const { createUser, loginWithGoogle } = use(AuthContext);
+  const { createUser, loginWithGoogle,updateUserProfile } = use(AuthContext);
 
   const navigate = useNavigate();
   const location = useLocation();
@@ -19,15 +19,19 @@ const Register = () => {
 
     setError("");
 
+    const name=e.target.name.value;
+    const photo=e.target.photo.value;
     const email = e.target.email.value;
     const password = e.target.password.value;
 
     createUser(email, password)
-      .then((result) => {
-        console.log(result.user);
+      .then(() => {
+        return updateUserProfile(name,photo)
+        .then(()=>{
         alert("Successfully created your account");
         e.target.reset();
         navigate(location.state || "/", { replace: true });
+        })
       })
       .catch((error) => {
         setError(error.message);
