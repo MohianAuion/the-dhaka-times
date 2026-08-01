@@ -28,7 +28,7 @@ const Navbar = () => {
 
         {/* User Info */}
         <div className="min-w-0 flex-1">
-          <p className="text-green-700 font-semibold text-sm truncate">
+          <p className="text-green-700 font-semibold text-xs truncate">
             {user?.email}
           </p>
         </div>
