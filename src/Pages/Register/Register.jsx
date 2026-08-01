@@ -6,15 +6,18 @@ import { Link, useLocation, useNavigate } from "react-router";
 
 const Register = () => {
   const { createUser, loginWithGoogle } = use(AuthContext);
+
   const navigate = useNavigate();
-  const location=useLocation();
+  const location = useLocation();
 
   const [showPass, setShowPass] = useState(false);
   const [error, setError] = useState("");
 
-  // Handle Register
+  // Register
   const handleRegister = (e) => {
     e.preventDefault();
+
+    setError("");
 
     const email = e.target.email.value;
     const password = e.target.password.value;
@@ -24,27 +27,27 @@ const Register = () => {
         console.log(result.user);
         alert("Successfully created your account");
         e.target.reset();
-        navigate(location.state || '/', {replace:true});
+        navigate(location.state || "/", { replace: true });
       })
       .catch((error) => {
         setError(error.message);
-        e.target.reset();
       });
   };
 
-  // Show Password
-  const handleShowPass = (e) => {
-    e.preventDefault();
+  // Show / Hide Password
+  const handleShowPass = () => {
     setShowPass(!showPass);
   };
 
   // Google Register
   const handleGoogleLogin = () => {
+    setError("");
+
     loginWithGoogle()
       .then((result) => {
         console.log(result.user);
         alert("Successfully created your account");
-        navigate(location.state || '/', {replace:true});
+        navigate(location.state || "/", { replace: true });
       })
       .catch((error) => {
         setError(error.message);
@@ -52,126 +55,139 @@ const Register = () => {
   };
 
   return (
-    <section className="w-11/12 sm:w-10/12 md:w-8/12 lg:w-6/12 xl:w-4/12 mx-auto py-10 sm:py-14 md:py-20 lg:py-24">
+    <section className="w-full px-4 sm:px-6 lg:px-8 py-10 sm:py-14 lg:py-20 xl:py-24">
+      <div className="max-w-md lg:max-w-lg mx-auto">
 
-      {/* Heading */}
-      <div className="text-center mb-6">
-        <h1 className="text-2xl sm:text-3xl md:text-4xl font-bold">
-          Create Your Account
-        </h1>
-      </div>
+        {/* Heading */}
+        <div className="text-center mb-3 lg:mb-5">
+          <h1 className="text-2xl sm:text-3xl lg:text-4xl font-bold">
+            Create Your Account
+          </h1>
 
-      {/* Card */}
-      <div className="card bg-base-100 shadow-2xl">
-        <div className="card-body p-5 sm:p-6 md:p-8">
+        </div>
 
-          <form onSubmit={handleRegister}>
-            <fieldset className="fieldset">
+        {/* Card */}
+        <div className="card bg-base-100 shadow-xl lg:shadow-2xl">
+          <div className="card-body p-5 sm:p-7 lg:p-10">
 
-              {/* Name */}
-              <label className="label text-sm sm:text-base">
-                Name
-              </label>
+            <form onSubmit={handleRegister}>
+              <fieldset className="space-y-4 md:space-y-5">
 
-              <input
-                type="text"
-                className="input input-bordered w-full text-sm sm:text-base"
-                placeholder="Your name"
-                name="name"
-                required
-              />
+                {/* Name */}
+                <div>
+                  <label className="label pb-1 font-medium text-sm sm:text-base">
+                    Name
+                  </label>
 
-              {/* Photo URL */}
-              <label className="label text-sm sm:text-base mt-2">
-                Photo URL
-              </label>
+                  <input
+                    type="text"
+                    name="name"
+                    required
+                    placeholder="Enter your name"
+                    className="input input-bordered w-full h-12 text-sm sm:text-base"
+                  />
+                </div>
 
-              <input
-                type="text"
-                className="input input-bordered w-full text-sm sm:text-base"
-                placeholder="Photo URL"
-                name="photo"
-              />
+                {/* Photo URL */}
+                <div>
+                  <label className="label pb-1 font-medium text-sm sm:text-base">
+                    Photo URL
+                  </label>
 
-              {/* Email */}
-              <label className="label text-sm sm:text-base mt-2">
-                Email
-              </label>
+                  <input
+                    type="text"
+                    name="photo"
+                    placeholder="Enter photo URL"
+                    className="input input-bordered w-full h-12 text-sm sm:text-base"
+                  />
+                </div>
 
-              <input
-                type="email"
-                className="input input-bordered w-full text-sm sm:text-base"
-                placeholder="Your email"
-                name="email"
-                required
-              />
+                {/* Email */}
+                <div>
+                  <label className="label pb-1 font-medium text-sm sm:text-base">
+                    Email
+                  </label>
 
-              {/* Password */}
-              <div className="relative mt-2">
-                <label className="label text-sm sm:text-base">
-                  Password
-                </label>
+                  <input
+                    type="email"
+                    name="email"
+                    required
+                    placeholder="Enter your email"
+                    className="input input-bordered w-full h-12 text-sm sm:text-base"
+                  />
+                </div>
 
-                <input
-                  type={showPass ? "text" : "password"}
-                  className="input input-bordered w-full pr-12 text-sm sm:text-base"
-                  placeholder="Your password"
-                  name="password"
-                  required
-                />
+                {/* Password */}
+                <div className="relative">
+                  <label className="label pb-1 font-medium text-sm sm:text-base">
+                    Password
+                  </label>
 
+                  <input
+                    type={showPass ? "text" : "password"}
+                    name="password"
+                    required
+                    placeholder="Enter your password"
+                    className="input input-bordered w-full h-12 pr-12 text-sm sm:text-base"
+                  />
+
+                  <button
+                    type="button"
+                    onClick={handleShowPass}
+                    className="absolute right-4 bottom-4 text-gray-500 hover:text-black transition"
+                  >
+                    {showPass ? (
+                      <FaEyeSlash className="text-lg" />
+                    ) : (
+                      <FaEye className="text-lg" />
+                    )}
+                  </button>
+                </div>
+
+                {/* Error */}
+                {error && (
+                  <p className="rounded-md bg-red-100 px-3 py-2 text-sm text-red-600 break-words">
+                    {error}
+                  </p>
+                )}
+
+                {/* Register Button */}
                 <button
-                  type="button"
-                  onClick={handleShowPass}
-                  className="absolute right-4 top-[42px] text-gray-500 hover:text-black"
+                  type="submit"
+                  className="btn btn-neutral w-full h-12 text-base font-medium mt-2"
                 >
-                  {showPass ? (
-                    <FaEyeSlash className="text-lg" />
-                  ) : (
-                    <FaEye className="text-lg" />
-                  )}
+                  Register
                 </button>
-              </div>
+              </fieldset>
+            </form>
 
-              {/* Error */}
-              {error && (
-                <p className="text-red-500 text-sm font-medium mt-2 break-words">
-                  {error}
-                </p>
-              )}
+            {/* Login */}
+            <div className="text-center mt-6 text-sm sm:text-base">
+              Already have an account? Please{" "}
+              <Link
+                to="/auth/login"
+                state={location.state}
+                className="text-sky-500 font-semibold underline"
+              >
+                Login
+              </Link>
+            </div>
 
-              {/* Register Button */}
-              <button className="btn btn-neutral w-full mt-5">
-                Register
-              </button>
+            {/* Divider */}
+            <div className="divider my-4 text-xs sm:text-sm">
+              OR
+            </div>
 
-            </fieldset>
-          </form>
-
-          {/* Login Link */}
-          <div className="text-center mt-5 text-sm sm:text-base">
-            Already have an account?{" "}
-            <Link
-              to="/auth/login"
-              state={location.state}
-              className="text-sky-500 font-semibold hover:underline"
+            {/* Google Register */}
+            <button
+              onClick={handleGoogleLogin}
+              className="btn btn-outline btn-info w-full h-12 text-base font-medium"
             >
-              Login
-            </Link>
+              <FcGoogle className="text-xl" />
+              Sign up with Google
+            </button>
+
           </div>
-
-          {/* Divider */}
-          <div className="divider my-4">OR</div>
-
-          {/* Google Register */}
-          <button
-            onClick={handleGoogleLogin}
-            className="btn btn-outline btn-info w-full"
-          >
-            <FcGoogle className="text-xl" />
-            Sign up with Google
-          </button>
-
         </div>
       </div>
     </section>

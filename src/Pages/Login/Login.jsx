@@ -6,9 +6,9 @@ import { FcGoogle } from "react-icons/fc";
 
 const Login = () => {
   const { logInUser, loginWithGoogle } = use(AuthContext);
+
   const navigate = useNavigate();
-  const location=useLocation();
-  console.log(location);
+  const location = useLocation();
 
   const [showPass, setShowPass] = useState(false);
   const [error, setError] = useState("");
@@ -17,6 +17,8 @@ const Login = () => {
   const handleLogin = (e) => {
     e.preventDefault();
 
+    setError("");
+
     const email = e.target.email.value;
     const password = e.target.password.value;
 
@@ -24,7 +26,8 @@ const Login = () => {
       .then((result) => {
         console.log(result.user);
         alert("User successfully logged in");
-       navigate(location.state || "/", { replace: true });
+        e.target.reset();
+        navigate(location.state || "/", { replace: true });
       })
       .catch((error) => {
         setError(error.message);
@@ -32,18 +35,19 @@ const Login = () => {
   };
 
   // Show / Hide Password
-  const handleShowPass = (e) => {
-    e.preventDefault();
+  const handleShowPass = () => {
     setShowPass(!showPass);
   };
 
   // Google Login
   const handleGoogleLogin = () => {
+    setError("");
+
     loginWithGoogle()
       .then((result) => {
         console.log(result.user);
         alert("User successfully logged in");
-        navigate(location.state || '/', {replace:true})
+        navigate(location.state || "/", { replace: true });
       })
       .catch((error) => {
         setError(error.message);
@@ -51,104 +55,121 @@ const Login = () => {
   };
 
   return (
-    <section className="w-11/12 sm:w-10/12 md:w-8/12 lg:w-6/12 xl:w-4/12 mx-auto py-10 sm:py-14 md:py-20 lg:py-24">
-      {/* Heading */}
-      <div className="text-center mb-6">
-        <h1 className="text-2xl sm:text-3xl md:text-4xl font-bold">
-          Login to Your Account
-        </h1>
-      </div>
+    <section className="w-full px-4 sm:px-6 lg:px-8 py-10 sm:py-14 lg:py-20 xl:py-24">
+      <div className="max-w-md lg:max-w-lg mx-auto">
 
-      {/* Card */}
-      <div className="card bg-base-100 shadow-2xl">
-        <div className="card-body p-5 sm:p-6 md:p-8">
-          <form onSubmit={handleLogin}>
-            <fieldset className="fieldset">
+        {/* Heading */}
+        <div className="text-center mb-3 lg:mb-5">
+          <h1 className="text-2xl sm:text-3xl lg:text-4xl font-bold">
+            Login Your Account
+          </h1>
 
-              {/* Email */}
-              <label className="label text-sm sm:text-base">
-                Email
-              </label>
+        </div>
 
-              <input
-                type="email"
-                className="input input-bordered w-full text-sm sm:text-base"
-                placeholder="Enter your email"
-                name="email"
-                required
-              />
+        {/* Card */}
+        <div className="card bg-base-100 shadow-xl lg:shadow-2xl">
+          <div className="card-body p-5 sm:p-7 lg:p-10">
 
-              {/* Password */}
-              <div className="relative mt-3">
-                <label className="label text-sm sm:text-base">
-                  Password
-                </label>
+            <form onSubmit={handleLogin}>
+              <fieldset className="space-y-4 md:space-y-5">
 
-                <input
-                  type={showPass ? "text" : "password"}
-                  className="input input-bordered w-full pr-12 text-sm sm:text-base"
-                  placeholder="Enter your password"
-                  name="password"
-                  required
-                />
+                {/* Email */}
+                <div>
+                  <label className="label pb-1 font-medium text-sm sm:text-base">
+                    Email
+                  </label>
 
+                  <input
+                    type="email"
+                    name="email"
+                    required
+                    placeholder="Enter your email"
+                    className="input input-bordered w-full h-12 text-sm sm:text-base"
+                  />
+                </div>
+
+                {/* Password */}
+                <div className="relative">
+                  <label className="label pb-1 font-medium text-sm sm:text-base">
+                    Password
+                  </label>
+
+                  <input
+                    type={showPass ? "text" : "password"}
+                    name="password"
+                    required
+                    placeholder="Enter your password"
+                    className="input input-bordered w-full h-12 pr-12 text-sm sm:text-base"
+                  />
+
+                  <button
+                    type="button"
+                    onClick={handleShowPass}
+                    className="absolute right-4 bottom-4 text-gray-500 hover:text-black transition"
+                  >
+                    {showPass ? (
+                      <FaEyeSlash className="text-lg" />
+                    ) : (
+                      <FaEye className="text-lg" />
+                    )}
+                  </button>
+                </div>
+
+                {/* Error */}
+                {error && (
+                  <p className="rounded-md bg-red-100 px-3 py-2 text-sm text-red-600 break-words">
+                    {error}
+                  </p>
+                )}
+
+                {/* Forgot Password */}
+                <div>
+                  <button
+                    type="button"
+                    className="link link-hover text-sm"
+                  >
+                    Forgot Password?
+                  </button>
+                </div>
+
+                {/* Login Button */}
                 <button
-                  type="button"
-                  onClick={handleShowPass}
-                  className="absolute right-4 top-[42px] text-gray-500 hover:text-black"
+                  type="submit"
+                  className="btn btn-neutral w-full h-12 text-base font-medium"
                 >
-                  {showPass ? (
-                    <FaEyeSlash className="text-lg" />
-                  ) : (
-                    <FaEye className="text-lg" />
-                  )}
+                  Login
                 </button>
-              </div>
 
-              {/* Error */}
-              {error && (
-                <p className="text-red-500 text-sm font-medium mt-2 break-words">
-                  {error}
-                </p>
-              )}
+              </fieldset>
+            </form>
 
-              {/* Forgot Password */}
-              <div className="mt-2">
-                <a className="link link-hover text-sm">
-                  Forgot password?
-                </a>
-              </div>
+            {/* Register */}
+            <div className="text-center mt-6 text-sm sm:text-base">
+              Don't have an account? Please{" "}
+              <Link
+                to="/auth/register"
+                state={location.state}
+                className="text-red-500 font-semibold underline"
+              >
+                Register
+              </Link>
+            </div>
 
-              {/* Login Button */}
-              <button className="btn btn-neutral w-full mt-5">
-                Login
-              </button>
-            </fieldset>
-          </form>
+            {/* Divider */}
+            <div className="divider my-4 text-xs sm:text-sm">
+              OR
+            </div>
 
-          {/* Register */}
-          <div className="text-center mt-5 text-sm sm:text-base">
-            Don't have an account?{" "}
-            <Link
-              to="/auth/register"
-                 state={location.state}
-              className="text-red-500 font-semibold hover:underline"
+            {/* Google Login */}
+            <button
+              onClick={handleGoogleLogin}
+              className="btn btn-outline btn-info w-full h-12 text-base font-medium"
             >
-              Register
-            </Link>
+              <FcGoogle className="text-xl" />
+              Login with Google
+            </button>
+
           </div>
-
-          {/* Divider */}
-          <div className="divider my-4">OR</div>
-
-          {/* Google Login */}
-          <button
-            onClick={handleGoogleLogin}
-            className="btn btn-outline btn-info w-full"
-          >
-            <FcGoogle className="text-xl" />
-            Login with Google
-          </button>
         </div>
       </div>
     </section>
