@@ -1,118 +1,179 @@
-import React, { use, useState } from 'react';
-import { AuthContext } from '../../Context/AuthContext';
-import { FaEye, FaEyeSlash } from 'react-icons/fa';
-import { FcGoogle } from 'react-icons/fc';
-import { Link } from 'react-router';
+import React, { use, useState } from "react";
+import { AuthContext } from "../../Context/AuthContext";
+import { FaEye, FaEyeSlash } from "react-icons/fa";
+import { FcGoogle } from "react-icons/fc";
+import { Link, useNavigate } from "react-router";
 
 const Register = () => {
+  const { createUser, loginWithGoogle } = use(AuthContext);
+  const navigate = useNavigate();
 
-    const{createUser, loginWithGoogle}=use(AuthContext);
+  const [showPass, setShowPass] = useState(false);
+  const [error, setError] = useState("");
 
-    const[showPass, setShowPass]=useState(false);
-    const[error, setError]=useState('');
-
-const handleRegister=e=>{
+  // Handle Register
+  const handleRegister = (e) => {
     e.preventDefault();
 
-    const email=e.target.email.value;
-    const password=e.target.password.value;
-    console.log(email, password);
+    const email = e.target.email.value;
+    const password = e.target.password.value;
 
     createUser(email, password)
-    .then(result=>{
+      .then((result) => {
         console.log(result.user);
-        alert('successfully created your account');
+        alert("Successfully created your account");
         e.target.reset();
-    })
-    .catch(error=>{
+        navigate("/");
+      })
+      .catch((error) => {
         setError(error.message);
-         e.target.reset();
-    })
-}
+        e.target.reset();
+      });
+  };
 
-// handle show password
-const handleShowPass=e=>{
+  // Show Password
+  const handleShowPass = (e) => {
     e.preventDefault();
     setShowPass(!showPass);
-}
+  };
 
-const handleGoogleLogin=()=>{
+  // Google Register
+  const handleGoogleLogin = () => {
     loginWithGoogle()
-    .then(result=>{
+      .then((result) => {
         console.log(result.user);
-        alert('successfully create your account');
-      
-    })
-    .catch(error=>{
-     setError(error.message);
-   
+        alert("Successfully created your account");
+        navigate("/");
+      })
+      .catch((error) => {
+        setError(error.message);
+      });
+  };
 
-    })
-}
-    return (
-        <div className="w-10/12 mx-auto bg-base-200 mt-24 mb-24">
-  <div>
-    <div className="text-center mb-5">
-      <h1 className="text-3xl font-bold">Create Your Account</h1>
-    </div>
-    <div className="card bg-base-100 w-full mx-auto max-w-sm  shrink-0 shadow-2xl">
-      <div className="card-body">
+  return (
+    <section className="w-11/12 sm:w-10/12 md:w-8/12 lg:w-6/12 xl:w-4/12 mx-auto py-10 sm:py-14 md:py-20 lg:py-24">
 
-       <form onSubmit={handleRegister}>
-
-         <fieldset className="fieldset">
-
-            {/* Name */}
-          <label className="label">Name</label>
-          <input type="text" className="input" placeholder="user name" name='name' required />
-            {/* photo url */}
-          <label className="label">Url</label>
-          <input type="text" className="input" placeholder="photo url" name='photo' />
-            {/* email */}
-          <label className="label">Email</label>
-          <input type="email" className="input" placeholder="your email" name='email' required />
-          {/* password */}
-          <div className='relative'>
-            <label className="label">Password</label>
-          <input type={showPass? 'text': 'password'} className="input" placeholder="your password" name='password' required />
-          <button onClick={handleShowPass} className='absolute top-8 right-7 text-sm'>{
-            showPass? <FaEyeSlash></FaEyeSlash> : <FaEye></FaEye>
-            }</button>
-          </div>
-          <h2 className='text-red-500 font-semibold'>
-            {error}
-         </h2>
-
-          {/* register */}
-          <button className="btn btn-neutral mt-4">Register</button>
-         
-        </fieldset>
-       </form>
-
-        {/* go to register  */}
-            <div>
-              <h2 className="text-center">
-                Already have an account? Please{' '}
-                <Link
-                  to="/auth/register"
-                  className="text-sky-500 font-semibold underline"
-                >
-                  LogIn
-                </Link>
-              </h2>
-            </div>
-
-        {/* sign in with Google */}
-                   <div className="mt-2">
-                       <button onClick={handleGoogleLogin} className="btn btn-outline btn-info w-full">
-                      <FcGoogle className="text-lg"></FcGoogle> LogIn with Google
-                   </button>
-                   </div>
+      {/* Heading */}
+      <div className="text-center mb-6">
+        <h1 className="text-2xl sm:text-3xl md:text-4xl font-bold">
+          Create Your Account
+        </h1>
       </div>
-    </div>
-  </div>
-</div>
-    );
+
+      {/* Card */}
+      <div className="card bg-base-100 shadow-2xl">
+        <div className="card-body p-5 sm:p-6 md:p-8">
+
+          <form onSubmit={handleRegister}>
+            <fieldset className="fieldset">
+
+              {/* Name */}
+              <label className="label text-sm sm:text-base">
+                Name
+              </label>
+
+              <input
+                type="text"
+                className="input input-bordered w-full text-sm sm:text-base"
+                placeholder="Your name"
+                name="name"
+                required
+              />
+
+              {/* Photo URL */}
+              <label className="label text-sm sm:text-base mt-2">
+                Photo URL
+              </label>
+
+              <input
+                type="text"
+                className="input input-bordered w-full text-sm sm:text-base"
+                placeholder="Photo URL"
+                name="photo"
+              />
+
+              {/* Email */}
+              <label className="label text-sm sm:text-base mt-2">
+                Email
+              </label>
+
+              <input
+                type="email"
+                className="input input-bordered w-full text-sm sm:text-base"
+                placeholder="Your email"
+                name="email"
+                required
+              />
+
+              {/* Password */}
+              <div className="relative mt-2">
+                <label className="label text-sm sm:text-base">
+                  Password
+                </label>
+
+                <input
+                  type={showPass ? "text" : "password"}
+                  className="input input-bordered w-full pr-12 text-sm sm:text-base"
+                  placeholder="Your password"
+                  name="password"
+                  required
+                />
+
+                <button
+                  type="button"
+                  onClick={handleShowPass}
+                  className="absolute right-4 top-[42px] text-gray-500 hover:text-black"
+                >
+                  {showPass ? (
+                    <FaEyeSlash className="text-lg" />
+                  ) : (
+                    <FaEye className="text-lg" />
+                  )}
+                </button>
+              </div>
+
+              {/* Error */}
+              {error && (
+                <p className="text-red-500 text-sm font-medium mt-2 break-words">
+                  {error}
+                </p>
+              )}
+
+              {/* Register Button */}
+              <button className="btn btn-neutral w-full mt-5">
+                Register
+              </button>
+
+            </fieldset>
+          </form>
+
+          {/* Login Link */}
+          <div className="text-center mt-5 text-sm sm:text-base">
+            Already have an account?{" "}
+            <Link
+              to="/auth/login"
+              className="text-sky-500 font-semibold hover:underline"
+            >
+              Login
+            </Link>
+          </div>
+
+          {/* Divider */}
+          <div className="divider my-4">OR</div>
+
+          {/* Google Register */}
+          <button
+            onClick={handleGoogleLogin}
+            className="btn btn-outline btn-info w-full"
+          >
+            <FcGoogle className="text-xl" />
+            Sign up with Google
+          </button>
+
+        </div>
+      </div>
+    </section>
+  );
 };
 
 export default Register;

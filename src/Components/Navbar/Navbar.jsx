@@ -1,6 +1,6 @@
 import React, { use } from "react";
 import profileImg from "../../assets/user.png";
-import { NavLink } from "react-router";
+import { Link, NavLink } from "react-router";
 import { AuthContext } from "../../Context/AuthContext";
 
 const Navbar = () => {
@@ -65,11 +65,7 @@ const Navbar = () => {
           />
 
           {
-            user? <button onClick={handleLogOut} className="btn bg-gray-800 text-white">
-            LogOut
-          </button> : <button className="btn bg-gray-800 text-white">
-            Login
-          </button>
+            user? <Link onClick={handleLogOut} className="btn bg-gray-800 text-white">LogOut</Link> : <Link to='auth/login' className="btn bg-gray-800 text-white">LogIn</Link>
           }
         </div>
 
