@@ -19,6 +19,7 @@ const Navbar = () => {
   }
   return (
     <nav className="w-11/12 lg:w-10/12 mx-auto mt-5">
+      
       {/* Mobile */}
       <div className="flex lg:hidden items-center justify-between">
 
@@ -37,9 +38,9 @@ const Navbar = () => {
             className="w-8 h-8 rounded-full"
           />
 
-          <button className="btn btn-sm bg-gray-800 text-white border-none px-4">
-            Login
-          </button>
+         {
+            user? <Link onClick={handleLogOut} className="btn bg-gray-800 text-white">LogOut</Link> : <Link to='/auth/login' className="btn bg-gray-800 text-white">LogIn</Link>
+          }
         </div>
       </div>
 
@@ -65,7 +66,7 @@ const Navbar = () => {
           />
 
           {
-            user? <Link onClick={handleLogOut} className="btn bg-gray-800 text-white">LogOut</Link> : <Link to='auth/login' className="btn bg-gray-800 text-white">LogIn</Link>
+            user? <Link onClick={handleLogOut} className="btn bg-gray-800 text-white">LogOut</Link> : <Link to='/auth/login' className="btn bg-gray-800 text-white">LogIn</Link>
           }
         </div>
 
