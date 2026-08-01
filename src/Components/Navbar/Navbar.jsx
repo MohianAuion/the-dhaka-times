@@ -5,68 +5,94 @@ import { AuthContext } from "../../Context/AuthContext";
 import Loading from "../../Pages/Loading/Loading";
 
 const Navbar = () => {
+  const { user, logOut, loading } = use(AuthContext);
 
-  const{user, logOut, loading}=use(AuthContext);
-
-  if(loading){
-    return <Loading></Loading>
+  if (loading) {
+    return <Loading />;
   }
 
-  const handleLogOut=()=>{
+  const handleLogOut = () => {
     logOut()
-    .then(result=>{
-      console.log(result.user);
-      alert('user is logged out');
-    })
-    .catch(error=>{
-      console.log(error.message);
-    })
-  }
+      .then(() => {
+        alert("User logged out successfully");
+      })
+      .catch((error) => {
+        console.log(error.message);
+      });
+  };
+
   return (
     <nav className="w-11/12 lg:w-10/12 mx-auto mt-5">
-      
       {/* Mobile */}
-      <div className="flex lg:hidden items-center justify-between">
+      <div className="flex lg:hidden items-center justify-between gap-3">
 
-        {/* Navigation */}
-        <div className="flex items-center font-semibold text-green-700 text-sm">
-          {user?.email}
+        {/* User Info */}
+        <div className="min-w-0 flex-1">
+          <p className="text-green-700 font-semibold text-sm truncate">
+            {user?.displayName || user?.email}
+          </p>
         </div>
 
-        {/* Right */}
-        <div className="flex items-center gap-2">
+        {/* Right Side */}
+        <div className="flex items-center gap-2 flex-shrink-0">
           <img
-            src={user?.photoURL || profileImg }
+            src={user?.photoURL || profileImg}
             alt="Profile"
-            className="w-9 h-9 rounded-full"
+            className="w-10 h-10 rounded-full object-cover border"
           />
 
-         {
-            user? <Link onClick={handleLogOut} className="btn bg-gray-800 text-white">LogOut</Link> : <Link to='/auth/login' className="btn bg-gray-800 text-white">LogIn</Link>
-          }
+          {user ? (
+            <button
+              onClick={handleLogOut}
+              className="btn btn-sm bg-gray-800 text-white hover:bg-black"
+            >
+              Log Out
+            </button>
+          ) : (
+            <Link
+              to="/auth/login"
+              className="btn btn-sm bg-gray-800 text-white hover:bg-black"
+            >
+              Login
+            </Link>
+          )}
         </div>
       </div>
 
       {/* Desktop */}
       <div className="hidden lg:flex items-center justify-between">
 
-        {/* Left */}
-        <div className="flex-1 font-semibold text-green-700">
-{user?.email}
+        {/* User Info */}
+        <div className="flex-1 min-w-0">
+          <p className="text-green-700 font-semibold text-lg truncate">
+            {user?.displayName || user?.email}
+          </p>
         </div>
-        {/* Right */}
-        <div className="flex flex-1 justify-end items-center gap-3">
+
+        {/* Right Side */}
+        <div className="flex items-center gap-4 flex-shrink-0">
           <img
             src={user?.photoURL || profileImg}
             alt="Profile"
-            className="w-11 h-11 rounded-full"
+            className="w-12 h-12 rounded-full object-cover border"
           />
 
-          {
-            user? <Link onClick={handleLogOut} className="btn bg-gray-800 text-white">LogOut</Link> : <Link to='/auth/login' className="btn bg-gray-800 text-white">LogIn</Link>
-          }
+          {user ? (
+            <button
+              onClick={handleLogOut}
+              className="btn bg-gray-800 text-white hover:bg-black"
+            >
+              Log Out
+            </button>
+          ) : (
+            <Link
+              to="/auth/login"
+              className="btn bg-gray-800 text-white hover:bg-black"
+            >
+              Login
+            </Link>
+          )}
         </div>
-
       </div>
     </nav>
   );
