@@ -29,7 +29,7 @@ const Navbar = () => {
         {/* User Info */}
         <div className="min-w-0 flex-1">
           <p className="text-green-700 font-semibold text-sm truncate">
-            {user?.displayName || user?.email}
+            {user?.email}
           </p>
         </div>
 
@@ -65,7 +65,7 @@ const Navbar = () => {
         {/* User Info */}
         <div className="flex-1 min-w-0">
           <p className="text-green-700 font-semibold text-lg truncate">
-            {user?.displayName || user?.email}
+            {user?.email}
           </p>
         </div>
 
