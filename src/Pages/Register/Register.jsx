@@ -82,8 +82,8 @@ Please verify your email before logging in.`);
     setError("");
 
     loginWithGoogle()
-      .then((result) => {
-        console.log(result.user);
+      .then(() => {
+        
         alert("Successfully created your account");
         navigate(location.state || "/", { replace: true });
       })

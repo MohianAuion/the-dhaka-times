@@ -25,8 +25,7 @@ const Login = () => {
     const password = e.target.password.value;
 
     logInUser(email, password)
-      .then((result) => {
-        console.log(result.user);
+      .then(() => {
         alert("User successfully logged in");
         e.target.reset();
         navigate(location.state || "/", { replace: true });
@@ -79,8 +78,7 @@ const Login = () => {
     setError("");
 
     loginWithGoogle()
-      .then((result) => {
-        console.log(result.user);
+      .then(() => {
         alert("User successfully logged in");
         navigate(location.state || "/", { replace: true });
       })

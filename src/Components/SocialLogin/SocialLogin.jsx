@@ -8,25 +8,21 @@ const SocialLogin = () => {
 
  const handleLoginWithGoogle = () => {
   loginWithGoogle()
-    .then((result) => {
-      console.log(result.user);
+    .then(() => {
       alert("Successfully logged in with Google");
     })
     .catch((error) => {
-      console.log(error.message);
       alert(error.message);
     });
 };
 
 const handleLoginWithGitHub=()=>{
   loginWithGitHub()
-  .then((result) => {
-      console.log(result.user);
+  .then(() => {
       alert("Successfully logged in with GitHub");
     })
     .catch((error) => {
-      console.log(error.message);
-      alert(error.message);
+   alert(error.message);
     });
 };
   return (

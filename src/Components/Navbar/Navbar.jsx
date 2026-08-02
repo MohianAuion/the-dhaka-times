@@ -14,9 +14,7 @@ const Navbar = () => {
       .then(() => {
         alert("User logged out successfully");
       })
-      .catch((error) => {
-        console.log(error)
-      });
+     
   };
 
   return (
