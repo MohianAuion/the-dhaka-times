@@ -62,7 +62,6 @@ const Register = () => {
 
 A verification email has been sent to your email address.
 Please verify your email before logging in.`);
-        e.target.reset();
         navigate(location.state || "/", { replace: true });
       })
       .catch((error) => {

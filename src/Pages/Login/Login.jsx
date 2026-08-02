@@ -27,7 +27,6 @@ const Login = () => {
     logInUser(email, password)
       .then(() => {
         alert("User successfully logged in");
-        e.target.reset();
         navigate(location.state || "/", { replace: true });
       })
       .catch((error) => {
