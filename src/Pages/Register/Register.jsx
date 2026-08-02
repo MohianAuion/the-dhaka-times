@@ -66,8 +66,11 @@ Please verify your email before logging in.`);
       })
       .catch((error) => {
       if(error.code==='auth/email-already-in-use'){
-        setError('An account with this email already exists. Please try another.')
-      }
+        setError('An account with this email already exists. Please try another.');
+        return;
+      }else {
+          setError("Something went wrong. Please try again.");
+        }
       });
   };
 

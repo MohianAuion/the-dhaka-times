@@ -32,10 +32,13 @@ const Login = () => {
       .catch((error) => {
         if (error.code === "auth/user-not-found") {
           setError("No account registered with this email.");
+          return;
         } else if (error.code === "auth/wrong-password") {
           setError("Incorrect password.");
+          return;
         } else if (error.code === "auth/invalid-credential") {
           setError("Incorrect email or password.");
+          return;
         } else {
           setError("Something went wrong. Please try again.");
         }
