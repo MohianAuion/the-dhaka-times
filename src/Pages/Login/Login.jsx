@@ -5,7 +5,8 @@ import { FaEye, FaEyeSlash } from "react-icons/fa";
 import { FcGoogle } from "react-icons/fc";
 
 const Login = () => {
-  const { logInUser, loginWithGoogle, resetPassword } = use(AuthContext);
+  const { logInUser, loginWithGoogle, resetPassword, authLoading } =
+    use(AuthContext);
 
   const navigate = useNavigate();
   const location = useLocation();
@@ -168,9 +169,10 @@ const Login = () => {
                 {/* Login Button */}
                 <button
                   type="submit"
+                  disabled={authLoading}
                   className="btn btn-neutral w-full h-12 text-base font-medium"
                 >
-                  Login
+                  {authLoading ? "Logging in..." : "Login"}
                 </button>
               </fieldset>
             </form>

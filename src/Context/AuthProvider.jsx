@@ -19,7 +19,12 @@ const gitHubProvider = new GithubAuthProvider();
 
 const AuthProvider = ({ children }) => {
   const [user, setUser] = useState(null);
+
+  // Checks if Firebase is determining the current user
   const [loading, setLoading] = useState(true);
+
+  // Used for Login/Register/Logout buttons
+  const [authLoading, setAuthLoading] = useState(false);
 
   // Check authentication state
   useEffect(() => {
@@ -33,46 +38,46 @@ const AuthProvider = ({ children }) => {
 
   // Register
   const createUser = (email, password) => {
-    setLoading(true);
+    setAuthLoading(true);
 
     return createUserWithEmailAndPassword(auth, email, password).finally(() => {
-      setLoading(false);
+      setAuthLoading(false);
     });
   };
 
   // Login
   const logInUser = (email, password) => {
-    setLoading(true);
+    setAuthLoading(true);
 
     return signInWithEmailAndPassword(auth, email, password).finally(() => {
-      setLoading(false);
+      setAuthLoading(false);
     });
   };
 
   // Google Login
   const loginWithGoogle = () => {
-    setLoading(true);
+    setAuthLoading(true);
 
     return signInWithPopup(auth, googleProvider).finally(() => {
-      setLoading(false);
+      setAuthLoading(false);
     });
   };
 
   // GitHub Login
   const loginWithGitHub = () => {
-    setLoading(true);
+    setAuthLoading(true);
 
     return signInWithPopup(auth, gitHubProvider).finally(() => {
-      setLoading(false);
+      setAuthLoading(false);
     });
   };
 
   // Logout
   const logOut = () => {
-    setLoading(true);
+    setAuthLoading(true);
 
     return signOut(auth).finally(() => {
-      setLoading(false);
+      setAuthLoading(false);
     });
   };
 
@@ -98,6 +103,7 @@ const AuthProvider = ({ children }) => {
     user,
     loading,
     setLoading,
+    authLoading,
     createUser,
     logInUser,
     loginWithGoogle,

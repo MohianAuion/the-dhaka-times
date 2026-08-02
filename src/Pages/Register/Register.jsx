@@ -5,7 +5,13 @@ import { FcGoogle } from "react-icons/fc";
 import { Link, useLocation, useNavigate } from "react-router";
 
 const Register = () => {
-  const { createUser, loginWithGoogle,updateUserProfile, emailVerify } = use(AuthContext);
+  const {
+    createUser,
+    loginWithGoogle,
+    updateUserProfile,
+    emailVerify,
+    authLoading,
+  } = use(AuthContext);
 
   const navigate = useNavigate();
   const location = useLocation();
@@ -19,8 +25,8 @@ const Register = () => {
 
     setError("");
 
-    const name=e.target.name.value;
-    const photo=e.target.photo.value;
+    const name = e.target.name.value;
+    const photo = e.target.photo.value;
     const email = e.target.email.value;
     const password = e.target.password.value;
 
@@ -28,47 +34,49 @@ const Register = () => {
 
     // email
     const emailValidation = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
-    if(!emailValidation.test(email)){
-        setError('Please enter a valid email address');
-        return;
+    if (!emailValidation.test(email)) {
+      setError("Please enter a valid email address");
+      return;
     }
     // password
     const passwordLength = /^.{8,}$/;
     const passwordCase = /^(?=.*[a-z])(?=.*[A-Z])/;
     const passwordSpecialChar = /[!@#$%^&*(),.?":{}|<>]/;
 
-    if(!passwordLength.test(password)){
-        setError('Password must be at least 8 characters long.');
-        return;
-    }
-    else if(!passwordCase.test(password)){
-        setError('Password must contain at least one uppercase and one lowercase letter.');
-        return;
-    }
-    else if(!passwordSpecialChar.test(password)){
-        setError('Password must contain at least one special character.');
-        return;
+    if (!passwordLength.test(password)) {
+      setError("Password must be at least 8 characters long.");
+      return;
+    } else if (!passwordCase.test(password)) {
+      setError(
+        "Password must contain at least one uppercase and one lowercase letter.",
+      );
+      return;
+    } else if (!passwordSpecialChar.test(password)) {
+      setError("Password must contain at least one special character.");
+      return;
     }
 
     createUser(email, password)
-    .then(()=>{
-        return emailVerify();
-    })
       .then(() => {
-        return updateUserProfile(name,photo);
+        return emailVerify();
       })
-      .then(()=>{
-         alert(`✅ Registration successful!
+      .then(() => {
+        return updateUserProfile(name, photo);
+      })
+      .then(() => {
+        alert(`✅ Registration successful!
 
 A verification email has been sent to your email address.
 Please verify your email before logging in.`);
         navigate(location.state || "/", { replace: true });
       })
       .catch((error) => {
-      if(error.code==='auth/email-already-in-use'){
-        setError('An account with this email already exists. Please try another.');
-        return;
-      }else {
+        if (error.code === "auth/email-already-in-use") {
+          setError(
+            "An account with this email already exists. Please try another.",
+          );
+          return;
+        } else {
           setError("Something went wrong. Please try again.");
         }
       });
@@ -85,7 +93,6 @@ Please verify your email before logging in.`);
 
     loginWithGoogle()
       .then(() => {
-        
         alert("Successfully created your account");
         navigate(location.state || "/", { replace: true });
       })
@@ -97,22 +104,18 @@ Please verify your email before logging in.`);
   return (
     <section className="w-full px-4 sm:px-6 lg:px-8 py-10 sm:py-14 lg:py-20 xl:py-24">
       <div className="max-w-md lg:max-w-lg mx-auto">
-
         {/* Heading */}
         <div className="text-center mb-3 lg:mb-5">
           <h1 className="text-2xl sm:text-3xl lg:text-4xl font-bold">
             Create Your Account
           </h1>
-
         </div>
 
         {/* Card */}
         <div className="card bg-base-100 shadow-xl lg:shadow-2xl">
           <div className="card-body p-5 sm:p-7 lg:p-10">
-
             <form onSubmit={handleRegister}>
               <fieldset className="space-y-4 md:space-y-5">
-
                 {/* Name */}
                 <div>
                   <label className="label pb-1 font-medium text-sm sm:text-base">
@@ -187,16 +190,17 @@ Please verify your email before logging in.`);
                 {/* Error */}
                 {error && (
                   <p className="rounded-md bg-red-100 px-3 py-2 text-sm text-red-600 break-words">
-                  {error}
+                    {error}
                   </p>
                 )}
 
                 {/* Register Button */}
                 <button
                   type="submit"
+                  disabled={authLoading}
                   className="btn btn-neutral w-full h-12 text-base font-medium mt-2"
                 >
-                  Register
+                  {authLoading ? "Creating Account..." : "Register"}
                 </button>
               </fieldset>
             </form>
@@ -214,9 +218,7 @@ Please verify your email before logging in.`);
             </div>
 
             {/* Divider */}
-            <div className="divider my-4 text-xs sm:text-sm">
-              OR
-            </div>
+            <div className="divider my-4 text-xs sm:text-sm">OR</div>
 
             {/* Google Register */}
             <button
@@ -226,7 +228,6 @@ Please verify your email before logging in.`);
               <FcGoogle className="text-xl" />
               Sign up with Google
             </button>
-
           </div>
         </div>
       </div>
