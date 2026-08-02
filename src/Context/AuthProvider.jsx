@@ -14,90 +14,105 @@ import {
 } from "firebase/auth";
 import { auth } from "../Firebase/Firebase.config";
 
-
 const googleProvider = new GoogleAuthProvider();
-const gitHubProvider= new GithubAuthProvider();
+const gitHubProvider = new GithubAuthProvider();
 
 const AuthProvider = ({ children }) => {
   const [user, setUser] = useState(null);
-  const[loading, setLoading]=useState(true);
+  const [loading, setLoading] = useState(true);
 
-
+  // Check authentication state
   useEffect(() => {
     const unsubscribe = onAuthStateChanged(auth, (currentUser) => {
       setUser(currentUser);
       setLoading(false);
     });
-    return () => {
-      unsubscribe();
-    };
+
+    return unsubscribe;
   }, []);
 
-  // createUserWithEmailAndPassword
+  // Register
   const createUser = (email, password) => {
     setLoading(true);
-    return createUserWithEmailAndPassword(auth, email, password);
+
+    return createUserWithEmailAndPassword(auth, email, password).finally(() => {
+      setLoading(false);
+    });
   };
 
-  // signInWithEmailAndPassword
+  // Login
   const logInUser = (email, password) => {
     setLoading(true);
-    return signInWithEmailAndPassword(auth, email, password);
+
+    return signInWithEmailAndPassword(auth, email, password).finally(() => {
+      setLoading(false);
+    });
   };
 
-  // signInWithGoogle
+  // Google Login
   const loginWithGoogle = () => {
     setLoading(true);
-    return signInWithPopup(auth, googleProvider);
+
+    return signInWithPopup(auth, googleProvider).finally(() => {
+      setLoading(false);
+    });
   };
 
-//   signInWithGitHub
-const loginWithGitHub=()=>{
-     setLoading(true);
-    return signInWithPopup(auth, gitHubProvider);
-}
-
-//   signOut
-const logOut=()=>{
+  // GitHub Login
+  const loginWithGitHub = () => {
     setLoading(true);
-    return signOut(auth);
-}
 
-// update profile
+    return signInWithPopup(auth, gitHubProvider).finally(() => {
+      setLoading(false);
+    });
+  };
 
-const updateUserProfile=(name, photo)=>{
-    return updateProfile(auth.currentUser,{
-        displayName:name, 
-        photoURL:photo,
-    })
+  // Logout
+  const logOut = () => {
+    setLoading(true);
 
-}
+    return signOut(auth).finally(() => {
+      setLoading(false);
+    });
+  };
 
-// sendEmailVerification
-const emailVerify=()=>{
+  // Update Profile
+  const updateUserProfile = (name, photo) => {
+    return updateProfile(auth.currentUser, {
+      displayName: name,
+      photoURL: photo,
+    });
+  };
+
+  // Email Verification
+  const emailVerify = () => {
     return sendEmailVerification(auth.currentUser);
-}
+  };
 
-// sendPasswordResetEmail
-const resetPassword=(email)=>{
+  // Reset Password
+  const resetPassword = (email) => {
     return sendPasswordResetEmail(auth, email);
-}
+  };
 
   const authInfo = {
     user,
+    loading,
+    setLoading,
     createUser,
     logInUser,
     loginWithGoogle,
     loginWithGitHub,
+    logOut,
     updateUserProfile,
     emailVerify,
     resetPassword,
-     logOut,
-    loading,
-    setLoading,
   };
 
-  return <AuthContext value={authInfo}>{children}</AuthContext>;
+  return (
+    <AuthContext value={authInfo}>
+      {children}
+    </AuthContext>
+  );
 };
 
 export default AuthProvider;
