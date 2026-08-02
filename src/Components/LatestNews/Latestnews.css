@@ -8,7 +8,7 @@
   display: flex;
   align-items: center;
   width: max-content;
-  animation: ticker 220s linear infinite;
+  animation: ticker 240s linear infinite;
 }
 
 .ticker:hover .ticker-track {

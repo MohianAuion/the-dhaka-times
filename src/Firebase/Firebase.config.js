@@ -6,12 +6,12 @@ import { getAuth } from "firebase/auth";
 
 // Your web app's Firebase configuration
 const firebaseConfig = {
-  apiKey: "AIzaSyCHy5yEwbWtLLMr7MZPDyPDNM-0_M5IveI",
-  authDomain: "the-dhaka-times-bc4d4.firebaseapp.com",
-  projectId: "the-dhaka-times-bc4d4",
-  storageBucket: "the-dhaka-times-bc4d4.firebasestorage.app",
-  messagingSenderId: "817350361051",
-  appId: "1:817350361051:web:0a41aed4ca2b9b37b371fe"
+  apiKey: import.meta.env.VITE_API_KEY,
+  authDomain: import.meta.env.VITE_AUTH_DOMAIN,
+  projectId: import.meta.env.VITE_PROJECT_ID,
+  storageBucket: import.meta.env.VITE_STORAGE_BUCKET,
+  messagingSenderId: import.meta.env.VITE_MESSAGING_SENDER_ID,
+  appId: import.meta.env.VITE_APP_ID,
 };
 
 // Initialize Firebase
