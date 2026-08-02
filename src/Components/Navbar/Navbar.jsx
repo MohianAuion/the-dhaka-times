@@ -2,14 +2,12 @@ import React, { use } from "react";
 import profileImg from "../../assets/user.png";
 import { Link } from "react-router";
 import { AuthContext } from "../../Context/AuthContext";
-import Loading from "../../Pages/Loading/Loading";
+
 
 const Navbar = () => {
-  const { user, logOut, loading } = use(AuthContext);
+  const { user, logOut} = use(AuthContext);
 
-  if (loading) {
-    return <Loading />;
-  }
+  
 
   const handleLogOut = () => {
     logOut()
