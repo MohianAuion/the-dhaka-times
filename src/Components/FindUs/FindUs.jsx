@@ -11,13 +11,16 @@ const FindUs = () => {
       <div className="flex flex-col gap-3">
 
         {/* Facebook */}
-        <button
+        <a
+          href="https://www.facebook.com/nytimes"
+          target="_blank"
+          rel="noopener noreferrer"
           className="
             flex
             items-center
             gap-3
             w-fit
-            min-w-[150px]
+            min-w-[170px]
             border
             border-gray-200
             rounded-lg
@@ -31,16 +34,19 @@ const FindUs = () => {
           <span className="text-xs sm:text-sm md:text-base font-medium">
             Facebook
           </span>
-        </button>
+        </a>
 
         {/* Instagram */}
-        <button
+        <a
+          href="https://www.instagram.com/nytimes/"
+          target="_blank"
+          rel="noopener noreferrer"
           className="
             flex
             items-center
             gap-3
             w-fit
-            min-w-[150px]
+            min-w-[170px]
             border
             border-gray-200
             rounded-lg
@@ -54,16 +60,19 @@ const FindUs = () => {
           <span className="text-xs sm:text-sm md:text-base font-medium">
             Instagram
           </span>
-        </button>
+        </a>
 
-        {/* Twitter */}
-        <button
+        {/* X (Twitter) */}
+        <a
+          href="https://x.com/nytimes"
+          target="_blank"
+          rel="noopener noreferrer"
           className="
             flex
             items-center
             gap-3
             w-fit
-            min-w-[150px]
+            min-w-[170px]
             border
             border-gray-200
             rounded-lg
@@ -75,9 +84,9 @@ const FindUs = () => {
         >
           <FaTwitter className="text-sky-500 text-lg md:text-xl" />
           <span className="text-xs sm:text-sm md:text-base font-medium">
-            Twitter
+            X (Twitter)
           </span>
-        </button>
+        </a>
 
       </div>
     </div>

@@ -1,15 +1,15 @@
-import React, { use, useState } from "react";
+import React, { use, useRef, useState } from "react";
 import { AuthContext } from "../../Context/AuthContext";
 import { Link, useLocation, useNavigate } from "react-router";
 import { FaEye, FaEyeSlash } from "react-icons/fa";
 import { FcGoogle } from "react-icons/fc";
 
 const Login = () => {
-  const { logInUser, loginWithGoogle } = use(AuthContext);
+  const { logInUser, loginWithGoogle, resetPassword } = use(AuthContext);
 
   const navigate = useNavigate();
   const location = useLocation();
-
+const emailRef=useRef();
   const [showPass, setShowPass] = useState(false);
   const [error, setError] = useState("");
 
@@ -38,6 +38,22 @@ const Login = () => {
   const handleShowPass = () => {
     setShowPass(!showPass);
   };
+
+//   handle forgot password
+const handleForgotPassword=()=>{
+const email=emailRef.current.value;
+if(!email){
+    alert('please enter your email address.');
+    return;
+}
+resetPassword(email)
+.then(()=>{
+    alert('"Password reset email sent! Please check your inbox.')
+})
+.catch(error=>{
+    setError(error.message);
+})
+}
 
   // Google Login
   const handleGoogleLogin = () => {
@@ -81,6 +97,7 @@ const Login = () => {
 
                   <input
                     type="email"
+                    ref={emailRef}
                     name="email"
                     required
                     placeholder="Enter your email"
@@ -126,6 +143,7 @@ const Login = () => {
                 <div>
                   <button
                     type="button"
+                    onClick={handleForgotPassword}
                     className="link link-hover text-sm"
                   >
                     Forgot Password?

@@ -1,8 +1,22 @@
-import React from "react";
+import React, { use } from "react";
 import { FaGithub } from "react-icons/fa";
 import { FcGoogle } from "react-icons/fc";
+import { AuthContext } from "../../Context/AuthContext";
 
 const SocialLogin = () => {
+  const{loginWithGoogle}=use(AuthContext);
+
+ const handleLoginWithGoogle = () => {
+  loginWithGoogle()
+    .then((result) => {
+      console.log(result.user);
+      alert("Successfully logged in with Google");
+    })
+    .catch((error) => {
+      console.log(error.message);
+      alert(error.message);
+    });
+};
   return (
     <div>
       <h2 className="text-sm sm:text-base md:text-lg lg:text-xl font-bold text-gray-800 mb-4 md:mb-5">
@@ -13,6 +27,7 @@ const SocialLogin = () => {
 
         {/* Google */}
         <button
+        onClick={handleLoginWithGoogle}
           className="
             btn
             btn-outline
