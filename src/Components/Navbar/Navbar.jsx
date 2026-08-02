@@ -1,4 +1,4 @@
-import React, { use } from "react";
+import React, { use} from "react";
 import profileImg from "../../assets/user.png";
 import { Link } from "react-router";
 import { AuthContext } from "../../Context/AuthContext";
@@ -15,7 +15,7 @@ const Navbar = () => {
         alert("User logged out successfully");
       })
       .catch((error) => {
-        console.log(error.message);
+        console.log(error)
       });
   };
 

@@ -9,7 +9,9 @@ const Login = () => {
 
   const navigate = useNavigate();
   const location = useLocation();
-const emailRef=useRef();
+
+  const emailRef = useRef();
+
   const [showPass, setShowPass] = useState(false);
   const [error, setError] = useState("");
 
@@ -30,7 +32,15 @@ const emailRef=useRef();
         navigate(location.state || "/", { replace: true });
       })
       .catch((error) => {
-        setError(error.message);
+        if (error.code === "auth/user-not-found") {
+          setError("No account registered with this email.");
+        } else if (error.code === "auth/wrong-password") {
+          setError("Incorrect password.");
+        } else if (error.code === "auth/invalid-credential") {
+          setError("Incorrect email or password.");
+        } else {
+          setError("Something went wrong. Please try again.");
+        }
       });
   };
 
@@ -39,22 +49,31 @@ const emailRef=useRef();
     setShowPass(!showPass);
   };
 
-//   handle forgot password
-const handleForgotPassword=()=>{
-const email=emailRef.current.value;
-if(!email){
-    alert('please enter your email address.');
-    return;
-}
-resetPassword(email)
-.then(()=>{
-    alert('"Password reset email sent! Please check your inbox.')
-})
-.catch(error=>{
-    setError(error.message);
-})
-}
+  //   handle forgot password
+  const handleForgotPassword = () => {
+    const email = emailRef.current.value;
 
+    if (!email) {
+      setError("Please enter your email address.");
+      return;
+    }
+
+    resetPassword(email)
+      .then(() => {
+        alert("Password reset email sent! Please check your inbox.");
+      })
+      .catch((error) => {
+        if (error.code === "auth/user-not-found") {
+          setError("No account registered with this email.");
+        } else if (error.code === "auth/invalid-email") {
+          setError("Invalid email address.");
+        } else if (error.code === "auth/too-many-requests") {
+          setError("Too many requests. Please try again later.");
+        } else {
+          setError("Something went wrong. Please try again.");
+        }
+      });
+  };
   // Google Login
   const handleGoogleLogin = () => {
     setError("");
@@ -73,22 +92,18 @@ resetPassword(email)
   return (
     <section className="w-full px-4 sm:px-6 lg:px-8 py-10 sm:py-14 lg:py-20 xl:py-24">
       <div className="max-w-md lg:max-w-lg mx-auto">
-
         {/* Heading */}
         <div className="text-center mb-3 lg:mb-5">
           <h1 className="text-2xl sm:text-3xl lg:text-4xl font-bold">
             Login Your Account
           </h1>
-
         </div>
 
         {/* Card */}
         <div className="card bg-base-100 shadow-xl lg:shadow-2xl">
           <div className="card-body p-5 sm:p-7 lg:p-10">
-
             <form onSubmit={handleLogin}>
               <fieldset className="space-y-4 md:space-y-5">
-
                 {/* Email */}
                 <div>
                   <label className="label pb-1 font-medium text-sm sm:text-base">
@@ -157,7 +172,6 @@ resetPassword(email)
                 >
                   Login
                 </button>
-
               </fieldset>
             </form>
 
@@ -174,9 +188,7 @@ resetPassword(email)
             </div>
 
             {/* Divider */}
-            <div className="divider my-4 text-xs sm:text-sm">
-              OR
-            </div>
+            <div className="divider my-4 text-xs sm:text-sm">OR</div>
 
             {/* Google Login */}
             <button
@@ -186,7 +198,6 @@ resetPassword(email)
               <FcGoogle className="text-xl" />
               Login with Google
             </button>
-
           </div>
         </div>
       </div>

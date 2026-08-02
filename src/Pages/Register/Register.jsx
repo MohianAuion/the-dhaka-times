@@ -24,6 +24,32 @@ const Register = () => {
     const email = e.target.email.value;
     const password = e.target.password.value;
 
+    // check validation
+
+    // email
+    const emailValidation = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+    if(!emailValidation.test(email)){
+        setError('Please enter a valid email address');
+        return;
+    }
+    // password
+    const passwordLength = /^.{8,}$/;
+    const passwordCase = /^(?=.*[a-z])(?=.*[A-Z])/;
+    const passwordSpecialChar = /[!@#$%^&*(),.?":{}|<>]/;
+
+    if(!passwordLength.test(password)){
+        setError('Password must be at least 8 characters long.');
+        return;
+    }
+    else if(!passwordCase.test(password)){
+        setError('Password must contain at least one uppercase and one lowercase letter.');
+        return;
+    }
+    else if(!passwordSpecialChar.test(password)){
+        setError('Password must contain at least one special character.');
+        return;
+    }
+
     createUser(email, password)
     .then(()=>{
         return emailVerify();
@@ -40,7 +66,9 @@ Please verify your email before logging in.`);
         navigate(location.state || "/", { replace: true });
       })
       .catch((error) => {
-        setError(error.message);
+      if(error.code==='auth/email-already-in-use'){
+        setError('An account with this email already exists. Please try another.')
+      }
       });
   };
 
@@ -157,7 +185,7 @@ Please verify your email before logging in.`);
                 {/* Error */}
                 {error && (
                   <p className="rounded-md bg-red-100 px-3 py-2 text-sm text-red-600 break-words">
-                    {error}
+                  {error}
                   </p>
                 )}
 
